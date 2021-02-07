@@ -1,0 +1,114 @@
+service: serverless-appsync-template
+
+plugins:
+  - serverless-webpack
+  - serverless-appsync-plugin 
+  - serverless-appsync-simulator
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'ap-northeast-1'}
+
+package:
+  exclude:
+    - node_modules/aws-sdk/**
+
+functions:
+  default:
+    name: ${self:provider.stage}-serverless-appsync-template-lambda
+    handler: src/api/handler.graphqlHandler
+    role: LambdaServiceRole
+
+custom:
+  webpack:
+    includeModules: true
+    packager: 'npm'
+  appsync-simulator:
+    location: ".webpack/service"
+  appSync:
+    name: ${self:provider.stage}-serverless-appsync-template
+    authenticationType: AMAZON_COGNITO_USER_POOLS
+    userPoolConfig:
+      awsRegion: ${self:provider.region}
+      # TODO: Change userPool when deploy
+      userPoolId: XXXXXXXXX
+      defaultAction: ALLOW
+    schema:
+      - graphql/schema.graphql
+      - graphql/query.graphql
+      - graphql/mutation.graphql
+      - graphql/objects/user.graphql
+      - graphql/inputObjects/createUser.graphql
+    defaultMappingTemplates:
+      # For Direct Lambda Resolvers
+      request: false
+      response: false
+    mappingTemplates:
+      # Queries
+      - field: me
+        type: Query
+        dataSource: MyLambda
+      # Mutations
+      - field: createUser
+        type: Mutation
+        dataSource: MyLambda
+    dataSources:
+      - type: AWS_LAMBDA
+        name: MyLambda
+        description: 'This is Sample API'
+        config:
+          functionName: default
+          serviceRoleArn: { Fn::GetAtt: [AppSyncServiceRole, Arn] }
+
+resources:
+  Resources:
+    AppSyncServiceRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        RoleName: "ServerlessAppSyncTemplate-AppSyncServiceRole"
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "appsync.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Policies:
+          - PolicyName: "ServerlessAppSyncTemplate-AppSyncServiceRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - "lambda:invokeFunction"
+                  Resource:
+                    - "arn:aws:lambda:${self:provider.region}:*:function:*"
+                    - "arn:aws:lambda:${self:provider.region}:*:function:*:*"
+    LambdaServiceRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        RoleName: "ServerlessAppSyncTemplate-LambdaServiceRole"
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "lambda.amazonaws.com"
+              Action:
+                - "sts:AssumeRole"
+        Policies:
+          - PolicyName: "ServerlessAppSyncTemplate-LambdaServiceRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - dynamodb:*
+                  Resource:
+                    - "arn:aws:dynamodb:${self:provider.region}:*:table/*"

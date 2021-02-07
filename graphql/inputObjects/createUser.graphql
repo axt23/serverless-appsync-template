@@ -1,0 +1,10 @@
+input InputCreateUser {
+  # Email
+  email: String!
+  # FamilyName
+  familyName: String!
+  # GivenName
+  givenName: String!
+  # DisplayName
+  displayName: String
+}

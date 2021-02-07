@@ -1,0 +1,27 @@
+{
+  "name": "serverless-appsync-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "local": "sls offline start"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "reflect-metadata": "^0.1.13",
+    "serverless": "^2.11.1",
+    "serverless-appsync-plugin": "^1.4.0",
+    "serverless-appsync-simulator": "^0.11.0",
+    "serverless-offline": "^6.8.0",
+    "serverless-webpack": "^5.3.5",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5",
+    "webpack": "^5.4.0",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "dependencies": {
+    "inversify": "^5.0.5",
+    "source-map-support": "^0.5.19"
+  }
+}

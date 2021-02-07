@@ -13,7 +13,7 @@ export class CreateNewUserInteractor implements CreateNewUserUsecase {
   public async handle(request: CreateNewUserRequest): Promise<CreateNewUserResponse> {
     const { email, familyName, givenName, displayName } = request;
 
-    const newUser = new User(email, familyName, givenName, displayName);
+    const newUser = new User(undefined, email, familyName, givenName, displayName);
     await this.usersRepository.add(newUser);
     
     return { user: newUser };

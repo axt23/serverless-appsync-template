@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  local:
+    build: .
+    image: node-14-local:1.0
+    tty: true
+    volumes:
+      - .:/app
+    ports:
+      - "20002:20002"

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "local": "sls offline start"
+    "local": "docker-compose up"
   },
   "author": "",
   "license": "ISC",

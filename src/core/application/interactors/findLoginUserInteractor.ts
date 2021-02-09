@@ -14,7 +14,13 @@ export class FindLoginUserInteractor implements FindLoginUserUsecase {
     // TODO: Get id from access token
     const id = 'mockuuid';
 
-    const user = await this.usersRepository.find(id);
+    const findResult = await this.usersRepository.find(id);
+    // TODO: Failure pattern
+    if (findResult.isFailure()) {
+      return { user: undefined };
+    }
+
+    const user = findResult.value;
 
     return { user };
   }

@@ -17,11 +17,11 @@ export class FindLoginUserInteractor implements FindLoginUserUsecase {
     const findResult = await this.usersRepository.find(id);
     // TODO: Failure pattern
     if (findResult.isFailure()) {
-      return { user: undefined };
+      return { data: undefined };
     }
 
     const user = findResult.value;
 
-    return { user };
+    return { data: user };
   }
 }

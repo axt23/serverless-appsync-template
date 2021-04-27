@@ -16,6 +16,6 @@ export class CreateNewUserInteractor implements CreateNewUserUsecase {
     const newUser = new User(undefined, email, familyName, givenName, displayName);
     await this.usersRepository.add(newUser);
     
-    return { user: newUser };
+    return { data: newUser };
   }
 }

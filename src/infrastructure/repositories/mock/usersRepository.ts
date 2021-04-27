@@ -1,6 +1,5 @@
 import { injectable } from 'inversify';
-import { User, UsersRepository } from '@/core/domain';
-import { Result, Success } from '@/core/domain/seedwork/result';
+import { Result, Success, User, UsersRepository } from '@/core/domain';
 
 @injectable()
 export class MockUsersRepository implements UsersRepository {

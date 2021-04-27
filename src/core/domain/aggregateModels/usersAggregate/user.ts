@@ -1,5 +1,5 @@
 import { AggregateRoot } from "@/core/domain/seedwork";
-import { UuidFactory } from "@/core/domain/utils";
+import { UuidUtility } from "@/core/domain/utils";
 import { Email } from "./email";
 
 export class User implements AggregateRoot {
@@ -16,7 +16,7 @@ export class User implements AggregateRoot {
     givenName: string,
     displayName: string = undefined,
   ) {
-    this.id = id ?? UuidFactory.generate();
+    this.id = id ?? UuidUtility.generate();
     this.email = new Email(email);
     this.familyName = familyName;
     this.givenName = givenName;

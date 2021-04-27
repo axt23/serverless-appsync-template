@@ -1,1 +1,1 @@
-export * from './uuidFactory';
+export * from './uuidUtility';

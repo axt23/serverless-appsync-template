@@ -40,8 +40,8 @@ custom:
       - graphql/schema.graphql
       - graphql/query.graphql
       - graphql/mutation.graphql
-      - graphql/objects/user.graphql
-      - graphql/inputObjects/createUser.graphql
+      - graphql/types/user.graphql
+      - graphql/inputs/inputCreateUser.graphql
     defaultMappingTemplates:
       # For Direct Lambda Resolvers
       request: false

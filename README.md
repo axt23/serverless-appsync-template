@@ -25,6 +25,8 @@ $ npm install
 $ npm run local
 ```
 
+You can access `http://localhost:20002/` and try API.
+
 ### How to deploy
 
 ```sh

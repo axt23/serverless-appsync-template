@@ -11,12 +11,12 @@ userPoolConfig:
 #   - name: myapikey
 #     description: 'My api key'
 #     expiresAfter: 30d
-schema: ${file(./config/schema.yml)}
+schema: ${file(./serverless/schema.yml)}
 defaultMappingTemplates:
   # For Direct Lambda Resolvers
   request: false
   response: false
-mappingTemplates: ${file(./config/mapping-templates.yml)}
+mappingTemplates: ${file(./serverless/mapping-templates.yml)}
 dataSources:
   - type: AWS_LAMBDA
     name: MyLambda

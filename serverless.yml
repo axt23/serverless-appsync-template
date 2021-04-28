@@ -16,7 +16,7 @@ package:
   patterns:
     - '!node_modules/aws-sdk/**'
 
-functions: ${file(./config/functions.yml)}
+functions: ${file(./serverless/functions.yml)}
 
 custom:
   webpack:
@@ -25,6 +25,6 @@ custom:
   appsync-simulator:
     location: ".webpack/service"
     watch: false
-  appSync: ${file(./config/appsync.yml)}
+  appSync: ${file(./serverless/appsync.yml)}
 
-resources: ${file(./config/resources.yml)}
+resources: ${file(./serverless/resources.yml)}

@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { injectable } from 'inversify';
 import { Result, Success, User, UsersRepository } from '@/core/domain';
 

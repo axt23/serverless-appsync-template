@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { User, UsersRepository } from "@/core/domain";
 import { CreateNewUserRequest, CreateNewUserResponse, CreateNewUserUsecase } from "@/core/application/";
 import { inject, injectable } from "inversify";
@@ -16,6 +17,12 @@ export class CreateNewUserInteractor implements CreateNewUserUsecase {
     const newUser = new User(undefined, email, familyName, givenName, displayName);
     await this.usersRepository.add(newUser);
     
-    return { data: newUser };
+    return {
+      id: newUser.id,
+      email: email,
+      familyName: familyName,
+      givenName: givenName,
+      displayName: displayName,
+    };
   }
 }

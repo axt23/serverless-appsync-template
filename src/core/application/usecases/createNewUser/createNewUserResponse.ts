@@ -1,6 +1,9 @@
-import { User } from "@/core/domain/aggregateModels";
 import { Response } from "@/core/application/seedwork";
 
 export interface CreateNewUserResponse extends Response {
-  data: User;
+  id: string;
+  email: string;
+  familyName: string;
+  givenName: string;
+  displayName: string | undefined;
 }

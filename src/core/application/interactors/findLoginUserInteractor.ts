@@ -1,6 +1,8 @@
+import "reflect-metadata";
 import { UsersRepository } from "@/core/domain/aggregateModels";
 import { FindLoginUserRequest, FindLoginUserResponse, FindLoginUserUsecase } from "@/core/application";
 import { inject, injectable } from "inversify";
+import { ApplicationError } from "../errors";
 
 @injectable()
 export class FindLoginUserInteractor implements FindLoginUserUsecase {
@@ -15,13 +17,18 @@ export class FindLoginUserInteractor implements FindLoginUserUsecase {
     const id = 'mockuuid';
 
     const findResult = await this.usersRepository.find(id);
-    // TODO: Failure pattern
     if (findResult.isFailure()) {
-      return { data: undefined };
+      throw new ApplicationError('Not exist user!', 1);
     }
 
     const user = findResult.value;
 
-    return { data: user };
+    return {
+      id: user.id,
+      email: user.email.email,
+      familyName: user.familyName,
+      givenName: user.givenName,
+      displayName: user.displayName,
+    };
   }
 }

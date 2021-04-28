@@ -11,10 +11,11 @@ provider:
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'ap-northeast-1'}
+  lambdaHashingVersion: '20201221'
 
 package:
-  exclude:
-    - node_modules/aws-sdk/**
+  patterns:
+    - '!node_modules/aws-sdk/**'
 
 functions:
   default:
@@ -30,12 +31,11 @@ custom:
     location: ".webpack/service"
   appSync:
     name: ${self:provider.stage}-serverless-appsync-template
-    authenticationType: AMAZON_COGNITO_USER_POOLS
-    userPoolConfig:
-      awsRegion: ${self:provider.region}
-      # TODO: Change userPool when deploy
-      userPoolId: XXXXXXXXX
-      defaultAction: ALLOW
+    authenticationType: API_KEY
+    apiKeys:
+      - name: myapikey
+        description: 'My api key'
+        expiresAfter: 30d
     schema:
       - graphql/schema.graphql
       - graphql/query.graphql

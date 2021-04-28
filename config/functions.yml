@@ -1,0 +1,4 @@
+default:
+  name: ${self:provider.stage}-serverless-appsync-template-lambda
+  handler: src/api/handler.graphqlHandler
+  role: LambdaServiceRole

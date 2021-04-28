@@ -1,0 +1,48 @@
+Resources:
+  AppSyncServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "ServerlessAppSyncTemplate-AppSyncServiceRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "appsync.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: "ServerlessAppSyncTemplate-AppSyncServiceRolePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - "lambda:invokeFunction"
+                Resource:
+                  - "arn:aws:lambda:${self:provider.region}:*:function:*"
+                  - "arn:aws:lambda:${self:provider.region}:*:function:*:*"
+  LambdaServiceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      RoleName: "ServerlessAppSyncTemplate-LambdaServiceRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: "ServerlessAppSyncTemplate-LambdaServiceRolePolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - dynamodb:*
+                Resource:
+                  - "arn:aws:dynamodb:${self:provider.region}:*:table/*"

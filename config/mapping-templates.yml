@@ -1,0 +1,8 @@
+# Queries
+- field: me
+  type: Query
+  dataSource: MyLambda
+# Mutations
+- field: createUser
+  type: Mutation
+  dataSource: MyLambda

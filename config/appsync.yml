@@ -1,0 +1,26 @@
+name: ${self:provider.stage}-serverless-appsync-template
+authenticationType: AMAZON_COGNITO_USER_POOLS
+userPoolConfig:
+  awsRegion: ${self:provider.region}
+  # TODO: Change userPool when deploy
+  userPoolId: XXXXXXXXX
+  defaultAction: ALLOW
+# TODO: If you want to use API_KEY, use it
+# authenticationType: API_KEY
+# apiKeys:
+#   - name: myapikey
+#     description: 'My api key'
+#     expiresAfter: 30d
+schema: ${file(./config/schema.yml)}
+defaultMappingTemplates:
+  # For Direct Lambda Resolvers
+  request: false
+  response: false
+mappingTemplates: ${file(./config/mapping-templates.yml)}
+dataSources:
+  - type: AWS_LAMBDA
+    name: MyLambda
+    description: 'This is Sample API'
+    config:
+      functionName: default
+      serviceRoleArn: { Fn::GetAtt: [AppSyncServiceRole, Arn] }
